@@ -339,6 +339,7 @@ Objective defineObjective(fira_message::sim_to_ref::Robot robot, fira_message::s
     double last_position_x;
     double last_position_y;
     CurrNode = getCurrentNode(Map, robot.x(), robot.y());  // pega o vertice atual do robo azul
+    GRAPH_POSITION BallNode = getCurrentNode(Map, ball.x(), ball.y());
     if(getDistance(robot.x(),robot.y(),ball.x(),ball.y()) < 7.01){
       // Se a bola estiver em uma distancia menor do que 6.01 , então o objetivo vira o ponto (155,65), ponto esse que fica
       //exatamente na metade do gol amarelo
@@ -361,12 +362,14 @@ Objective defineObjective(fira_message::sim_to_ref::Robot robot, fira_message::s
         // dessa forma que foi escrita, o goleiro consegue "acompanhar" o movimento da bola sem que saia dos limites de 
         // sua posição definida
         ang = getAngle(ball.x(), ball.y(), robot.x(), robot.y()); 
-      }else if(CurrNode.index_i != NextNode.index_i && CurrNode.index_j !=  NextNode.index_j){
+      }else if(CurrNode.index_i != NextNode.index_i && CurrNode.index_j !=  NextNode.index_j
+         && CurrNode.index_i != BallNode.index_i && CurrNode.index_j != BallNode.index_j){
         
         NextNode = getNextNode(Map,CurrNode,detection, ball.x(), ball.y()); // essa função pega o  proximo vértice que 
         // o robo deve ir
         x =  NextNode.x;
         y = NextNode.y;
+      }else{
         x = ball.x();
         y = ball.y();
       }
