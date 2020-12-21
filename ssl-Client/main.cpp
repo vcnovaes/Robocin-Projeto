@@ -208,7 +208,7 @@ bool AllowedPoint(GRAPH_POSITION Position, fira_message::sim_to_ref::Frame detec
     fira_message::sim_to_ref::Robot robot_enemy = detection.robots_yellow(i);
     printf("Distance of (%d,%d) %lf", Position.index_i, Position.index_j,
     getDistance(Position.x, Position.y, robot_enemy.x(), robot_enemy.y())  );
-    if(getDistance(Position.x, Position.y, robot_enemy.x(), robot_enemy.y()) < 80){ // if the yellow_root is near the point 
+    if(getDistance(Position.x, Position.y, robot_enemy.x(), robot_enemy.y()) < 60){ // if the yellow_root is near the point 
       printf("\t(%d,%d) is not allowed", Position.index_i, Position.index_j);
       Allowed = false;                                                              // it'isn't allowed
     }
@@ -345,6 +345,8 @@ Objective defineObjective(fira_message::sim_to_ref::Robot robot, fira_message::s
       //exatamente na metade do gol amarelo
       x = 155;
       y = 65;
+       robot.set_vx(0.05);
+        robot.set_vy(0.05);
       ang = getAngle(robot.x(),robot.y(),x,y); // aqui pega o angulo que ele deve virar em relação ao gol
       }else{
       
@@ -369,7 +371,11 @@ Objective defineObjective(fira_message::sim_to_ref::Robot robot, fira_message::s
         // o robo deve ir
         x =  NextNode.x;
         y = NextNode.y;
+        y = ball.y();
+       x = ball.x();
+
       }else{
+       
         x = ball.x();
         y = ball.y();
       }
